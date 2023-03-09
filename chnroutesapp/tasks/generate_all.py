@@ -57,25 +57,25 @@ def fetch_ip_data():
         unit_items=item.split('|')
         starting_ip=unit_items[3]
         num_ip=int(unit_items[4])
-        
+
         imask=0xffffffff^(num_ip-1)
         #convert to string
         imask=hex(imask)[2:]
         mask=[0]*4
-        mask[0]=imask[0:2]
+        mask[0] = imask[:2]
         mask[1]=imask[2:4]
         mask[2]=imask[4:6]
         mask[3]=imask[6:8]
-        
+
         #convert str to int
         mask=[ int(i,16 ) for i in mask]
         mask="%d.%d.%d.%d"%tuple(mask)
-        
+
         #mask in *nix format
         mask2=32-int(math.log(num_ip,2))
-        
+
         ip_data.append((starting_ip,mask,mask2))
-         
+
     return ip_data
 
 def generate_ovpn(ip_data, metric=25):
